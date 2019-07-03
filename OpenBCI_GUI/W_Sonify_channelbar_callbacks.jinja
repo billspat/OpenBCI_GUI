@@ -1,0 +1,28 @@
+
+// Java Processing code
+// a set of global functions that receive messages from 
+// gui components, repeated for each 'channel' 
+// each channel has a channelBar that has components on it
+// this is like a global switch function
+// each of these simply calls the widgets 
+//
+// soundSetting(string typeOfSetting, int channel, int newValue)
+//
+
+{% for c in range(1,16+1)  %}
+
+/////  CHANNEL {{c}}
+
+void gainChangeControl{{c}}(int n) {
+  println("gain slider {{c}} returned " + n);
+  w_sonify.soundSetting("gain", {{c}},n);
+}
+
+void freqChangeControl{{c}}(int n) {
+  println("freq change {{c}} returned " + n);
+  w_sonify.soundSetting("frequency", {{c}},n);
+}
+
+
+
+{% endfor %}

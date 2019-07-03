@@ -28,6 +28,7 @@ W_AnalogRead w_analogRead;
 W_DigitalRead w_digitalRead;
 W_MarkerMode w_markermode;
 W_playback w_playback;
+W_Sonify w_sonify;
 
 
 //ADD YOUR WIDGET TO WIDGETS OF WIDGETMANAGER
@@ -123,6 +124,10 @@ void setupWidgets(PApplet _this, ArrayList<Widget> w){
     w_template1 = new W_template(_this);
     w_template1.setTitle("Widget Template 1");
     addWidget(w_template1, w);
+	
+	w_sonify  = new W_Sonify(_this);
+	w_sonify.setTitle("Audio");
+	addWidget(w_sonify, w);
 
     // w_template2 = new W_template(_this);
     // w_template2.setTitle("Widget Template 2");
