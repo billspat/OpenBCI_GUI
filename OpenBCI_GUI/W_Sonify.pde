@@ -101,6 +101,7 @@ class W_Sonify extends Widget {
 
 
         numChannelBars = nchan; //nchan global var current number of system  (4, 8, or 16)
+        println(numChannelBars + " num channelbars");
         channelBars = new SoundChannelBar[numChannelBars];
         
         // ts_h = height of space for bars
@@ -111,8 +112,7 @@ class W_Sonify extends Widget {
        
         for(int i = 0; i < numChannelBars; i++){
             int channelBarY = int(ts_y) + i*(channelBarHeight); //iterate through bar locations
-            SoundChannelBar tempBar = new SoundChannelBar(_parent, i, int(ts_x), channelBarY, int(ts_w), channelBarHeight, cp5_widget); //int _channelNumber, int _x, int _y, int _w, int _h
-            channelBars[i] = tempBar;
+            channelBars[i] = new SoundChannelBar(_parent, i, int(ts_x), channelBarY, int(ts_w), channelBarHeight, cp5_widget); //int _channelNumber, int _x, int _y, int _w, int _h            
         }
 
         soundMgr = new SoundManager(100.0f, nchan);
@@ -162,7 +162,7 @@ class W_Sonify extends Widget {
         }
 
         //update channel bars 
-        for(int i = 0; i < numChannelBars; i++){
+        for(int i = 0; i < channelBars.length; i++){
                 // each bar simply sets values via UI sent back here
                 channelBars[i].update();
         }
@@ -175,7 +175,7 @@ class W_Sonify extends Widget {
           super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
           pushStyle();
 
-          for(int i = 0; i < numChannelBars; i++){
+          for(int i = 0; i < channelBars.length; i++){
               channelBars[i].draw();
           }
           // update sound aspect (this should move to a SoundManager class)
@@ -206,7 +206,7 @@ class W_Sonify extends Widget {
         ts_h = hF; //  - playbackWidgetHeight - plotBottomWell - (ts_padding*2);
         channelBarHeight = int(ts_h/numChannelBars);
 
-        for(int i = 0; i < numChannelBars; i++){
+        for(int i = 0; i < channelBars.length; i++){
             int channelBarY = int(ts_y) + i*(channelBarHeight); //iterate through bar locations
             channelBars[i].screenResized(int(ts_x), channelBarY, int(ts_w), channelBarHeight); //bar x, bar y, bar w, bar h
         }

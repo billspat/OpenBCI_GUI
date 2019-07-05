@@ -2,9 +2,17 @@
 // currently managing sound settings for each channel 
 
 class SoundChannelBar{
-
-    int channelNumber; 
-    String channelString;
+    // this is based on ChannelBar used in the TimeSeries Widget
+    // main differences are 
+    // 1) that channel number stars with 0 here, and to match all other zero-based arrays
+    // time series widgets the channel array starts at 1, here it starts at zero
+    //  the String channelString does start at 1
+    // 2) no plotting here (so far, may have a volume display)
+    // 3) channels have CP5 controls 
+    
+    // 
+    int channelNumber; // starts at zero, so this is technically true channel-1 
+    String channelString; // starts at 1 so it dispalys ok. 
     int x, y, w, h;
     boolean isOn; //true means data is streaming and channel is active on hardware ... this will send message to OpenBCI Hardware
     Button onOffButton;
@@ -20,7 +28,7 @@ class SoundChannelBar{
         // zero-based index channel numbers in this version
         channelNumber = _channelNumber;
         // display should be 1-based index
-        channelString = str(channelNumber+1);
+        channelString = str(channelNumber+1);  // since channelNumbers like Java arrays start at zero
 
         isOn = true;
 
@@ -36,10 +44,10 @@ class SoundChannelBar{
         }
 
         onOffButton = new Button (x + 6, y + int(h/2) - int(onOff_diameter/2), onOff_diameter, onOff_diameter, channelString, fontInfo.buttonLabel_size);
-        onOffButton.setHelpText("Click to toggle sound for channel " + channelNumber + ".");
+        onOffButton.setHelpText("Click to toggle sound for channel " + channelString + ".");
         onOffButton.setFont(h2, 16);
         onOffButton.setCircleButton(true);
-        onOffButton.setColorNotPressed(channelColors[(channelNumber-1)%8]); //Set channel button background colors
+        onOffButton.setColorNotPressed(channelColors[(channelNumber)%8]); //Set channel button background colors
         onOffButton.textColorNotActive = color(255); //Set channel button text to white
         onOffButton.hasStroke(false);
 
@@ -73,7 +81,7 @@ class SoundChannelBar{
         String fmt; float val;
 
         //update the voltage values
-        val = dataProcessing.data_std_uV[channelNumber-1];
+        val = dataProcessing.data_std_uV[channelNumber];
         voltageValue.string = String.format(getFmt(val),val) + " uVrms";
 
         // get data for audio for this channel!
@@ -177,7 +185,7 @@ class SoundChannelBar{
                 // activateChannel(channelNumber - 1);       // activate it
                 // maybe somethign like soundChannelOn()?
                 w_sonify.channelOn(channelNumber);
-                onOffButton.setColorNotPressed(channelColors[(channelNumber-1)%8]);
+                onOffButton.setColorNotPressed(channelColors[(channelNumber)%8]);
             }
         }
 
