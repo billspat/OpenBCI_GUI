@@ -125,9 +125,20 @@ void setupWidgets(PApplet _this, ArrayList<Widget> w){
     w_template1.setTitle("Widget Template 1");
     addWidget(w_template1, w);
 	
-	w_sonify  = new W_Sonify(_this);
-	w_sonify.setTitle("Audio");
-	addWidget(w_sonify, w);
+    try {  // try-catch block here to catch coding errors in my widget
+    	w_sonify  = new W_Sonify(_this);
+	    w_sonify.setTitle("Audio");
+	    addWidget(w_sonify, w);
+    }
+    catch (Exception e) {
+        println(e.getMessage());
+        StringWriter writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter( writer );
+        e.printStackTrace( printWriter );
+        printWriter.flush();
+        String stackTrace = writer.toString();
+        println(stackTrace);
+    }
 
     // w_template2 = new W_template(_this);
     // w_template2.setTitle("Widget Template 2");
