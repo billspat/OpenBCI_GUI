@@ -45,16 +45,25 @@ class SoundManager {
     }
 
     void turnSoundOn(){
-        println("turn sound on");        
+        println(" sound manager turning sound on");
         soundOn = true;
-        ac.start();  //
-
+        // turn it on only if it's not already running
+        if ( ! ac.isRunning()) {
+                println("sound mgr sound on")
+                ac.start();  //
+        } else {
+            println("turn sound on message received but sound was already running " );
+        }
     }
     
     void turnSoundOff(){
-        println("turning sound off");    
+        println("sound manager sound off");    
         soundOn = false;
-        ac.stop();
+        if ( ac.isRunning() ){ 
+            ac.stop();
+        } else {
+            println("turn sound off message received but sound was not running " );
+        }
     }
 
     // turn each channel on or off
@@ -153,7 +162,7 @@ class Sonifier {
 
     void setSoundOn(){
         // TODO: check if already started first
-        wp.start();
+        wp.pause(false);
     }
 
     void setSoundOff(){
@@ -184,7 +193,8 @@ class Sonifier {
         maxData = ( maxData >=currentData) ? maxData : currentData;
         minData = ( minData <=currentData) ? minData : currentData;
     }
-    
+
+
     void draw(){
         // called by parent sound manager draw method
         // Gain modulation by data
@@ -199,7 +209,7 @@ class Sonifier {
 // class TimeSeriesSoundManager extends SoundManager{
     // a class of sound manager just for time series channels
     // has an array of sound mangers for n channels?
-    // however we want an api that can handle mutlp
+    // however we wan_t an api that can handle mutlp
 // }
 
 

@@ -18,10 +18,6 @@ import beads.WavePlayer;
 import beads.Buffer;
 import beads.Glide;
 
-
-
-
-
 class W_Sonify extends Widget {
 
     //to see all core variables/methods of the Widget class, refer to Widget.pde
@@ -245,18 +241,17 @@ class W_Sonify extends Widget {
     }
 
 
-    void setSoundEnable(boolean b){      
+    void setSoundEnable(boolean b){  
+      println ("w_sonify soundEnabled currently " + soundEnabled );
+      println ( " message to change to " + b);    
+      // check to see if it's actually changed before changing anything
       if (soundEnabled != b){
-        // check to see if it's actually changed before changing anything
         soundEnabled = b;
-        // now that it's change, cahnge the state of the sound
-        // assumes the boolean in this widget is in sync with the sound manager
-        if (soundEnabled) {
-            println("turn sound on");    
+        // now that it's changed, forward message to soundMgr
+        if (soundEnabled) {            
             soundMgr.turnSoundOn();
         }
         else {
-            println("turning sound off");        
             soundMgr.turnSoundOff();         
         }
       }
@@ -299,14 +294,18 @@ class W_Sonify extends Widget {
 
 
 void sonifySoundEnableDropdown(int n){
+  boolean enableSound;
   switch(n){
     case 0:
-      w_sonify.setSoundEnable(false);
+      enableSound = false;
+      break;
     case 1:
-      w_sonify.setSoundEnable(true);
+      enableSound = true;      
+      break;
     default:
-      w_sonify.setSoundEnable(true);
+      enableSound = true;
   }
+  w_sonify.setSoundEnable(enableSound);
 }
 
 //These functions need to be global! These functions are activated when an item from the corresponding dropdown is selected
@@ -409,5 +408,3 @@ void sonifyScaleDropdown(int n){
   //  }
   
 //}
-
-
