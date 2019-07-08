@@ -49,7 +49,7 @@ class SoundManager {
         soundOn = true;
         // turn it on only if it's not already running
         if ( ! ac.isRunning()) {
-                println("sound mgr sound on")
+                println("sound mgr sound on");
                 ac.start();  //
         } else {
             println("turn sound on message received but sound was already running " );
@@ -81,7 +81,8 @@ class SoundManager {
     }
 
     void soundSetting(String settingName, int channelNum, float settingValue){
-        // called by w_sonify widget which is called by the global callback.  
+        // called by w_sonify widget which is called by the global callback. 
+        // values sent as floats 
         // see W_Sonify_channelbar_callbacks.jinja for strings of settingnames
         // TODO use java enum instead of strings here
 
@@ -89,12 +90,12 @@ class SoundManager {
         switch (settingName) {
             case "gain":
                 // possibly process the gain value here
-                channelSounds[channelNum].setGain( (float) settingValue);
+                channelSounds[channelNum].setGain( settingValue);
                 break;	
             case "frequency":
                 // process value here
                 
-                channelSounds[channelNum].setFrequency( (float) settingValue);
+                channelSounds[channelNum].setFrequency( settingValue);
                 break;            
         }
     }
@@ -199,7 +200,7 @@ class Sonifier {
         // called by parent sound manager draw method
         // Gain modulation by data
         // TODO process the data to make sense of the gain
-        setGain(currentData);
+        // setGain(currentData);
         
     }
 

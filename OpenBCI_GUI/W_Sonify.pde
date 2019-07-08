@@ -48,7 +48,7 @@ class W_Sonify extends Widget {
 
     int numChannelBars;
     SoundChannelBar[] channelBars;
-    int channelBarHeight;
+    int channelBarHeight;    
     float xF, yF, wF, hF, ts_padding, ts_x, ts_y, ts_w, ts_h;
     
     // all sound management goes in this object
@@ -102,7 +102,6 @@ class W_Sonify extends Widget {
         
         // ts_h = height of space for bars
         channelBarHeight = int(ts_h/numChannelBars);
-
        //create our channel bars and populate our channelBars array!
        // channelBar indexing is 0-based, unlike the OpenBCI time series bars
        
@@ -259,8 +258,19 @@ class W_Sonify extends Widget {
     
     // this is called byt he global GUI callbacks
     // and forwared to the current soundManager
-    void soundSetting(String settingName, int channel, int newValue){      
-      soundMgr.soundSetting(settingName, channel, newValue);
+    // note that the callbacks cast any int sent into float for this function
+    void soundSetting(String settingName, int channel, float newValue){ 
+       // need to alter the seteting from gain sliders to be a percentage ( val/maxval)
+       // get the maxvalue from the channelbar itself
+      float v; // var to hold new value
+      if (settingName == "gain" ){
+        v = newValue / 10.0f;        
+        // channelBars[channel].gainMax;
+      } else {
+        v = newValue;
+      }
+      soundMgr.soundSetting(settingName, channel, v);
+      
     }
 
     void channelOff(int c){

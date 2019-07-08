@@ -14,9 +14,10 @@ class SoundChannelBar{
     int channelNumber; // starts at zero, so this is technically true channel-1 
     String channelString; // starts at 1 so it dispalys ok. 
     int x, y, w, h;
-    boolean isOn; //true means data is streaming and channel is active on hardware ... this will send message to OpenBCI Hardware
+    private boolean isOn; //true means data is streaming and channel is active on hardware ... this will send message to OpenBCI Hardware
     Button onOffButton;
     int onOff_diameter;
+    public float gainMax;
     TextBox voltageValue;
     boolean drawVoltageValue = true;
     ControlP5 parentCP5;
@@ -62,13 +63,17 @@ class SoundChannelBar{
 
         // new var slider hieight or control heigh
         // functions are  gainChangeControl01,  gainChangeControl02, etc
+
+        // yuck setting this value by hand
+        gainMax = 10.0f;  //TODO put this in the constructor, or determine from parent 
+        // need to sync this value between the slider creation and value return
         gainSlider = parentCP5.addSlider("gainChangeControl" + channelNumber) 
             .setPosition(x + 50,  y + int(h/2) - int(onOff_diameter/2))
-            .setRange(0,10)
+            .setRange(0,gainMax)
             .setWidth(110)
             .setHeight(onOff_diameter-1)
             .setLabel("gain")
-            .setNumberOfTickMarks(11)
+            .setNumberOfTickMarks((int) gainMax + 1)
             .showTickMarks(true)
             .setValue(5);
         
@@ -178,18 +183,16 @@ class SoundChannelBar{
                 isOn = false; // deactivate it                
                 w_sonify.channelOff(channelNumber);
                 onOffButton.setColorNotPressed(color(50));
-
             }
             else { // if channel is not active
                 isOn = true;
-                // activateChannel(channelNumber - 1);       // activate it
-                // maybe somethign like soundChannelOn()?
                 w_sonify.channelOn(channelNumber);
                 onOffButton.setColorNotPressed(channelColors[(channelNumber)%8]);
             }
+
+            onOffButton.setIsActive(false);
         }
 
-        onOffButton.setIsActive(false);
     }
 }
 
