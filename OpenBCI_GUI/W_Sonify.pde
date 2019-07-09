@@ -25,9 +25,6 @@ class W_Sonify extends Widget {
     // global  isRunning
     //put your custom variables here...
     
-    private boolean visible = true;
-    private boolean updating = true;
-
     // store sound settings for each brain wave in a list of objects, keyed on wave type
     // List<SoundSetting  waveSounds IntList  SoundSetting;
     // waveSounds.set(THETA) = new SoundSettings("sine", 440, 10, 100); 
@@ -130,20 +127,6 @@ class W_Sonify extends Widget {
                 
     }
 
-    public boolean isVisible() {
-        return visible;
-    }
-    public boolean isUpdating() {
-        return updating;
-    }
-
-    public void setVisible(boolean _visible) {
-        visible = _visible;
-    }
-    public void setUpdating(boolean _updating) {
-        updating = _updating;
-    }
-  
 
     void update(){ 
         // if(visible && updating){     
@@ -166,7 +149,6 @@ class W_Sonify extends Widget {
     }
 
     void draw(){
-        if(visible){  // not sure where this is set.  
           super.draw(); //calls the parent draw() method of Widget (DON'T REMOVE)
           pushStyle();
 
@@ -182,7 +164,6 @@ class W_Sonify extends Widget {
 
           popStyle();
 
-        }
     }
 
 
@@ -246,8 +227,11 @@ class W_Sonify extends Widget {
       // check to see if it's actually changed before changing anything
       if (soundEnabled != b){
         soundEnabled = b;
+        // pass message down to manager
+        soundMgr.soundEnabled = soundEnabled;
         // now that it's changed, forward message to soundMgr
-        if (soundEnabled) {            
+        // maybe we should let the manager control if sound is off or on
+        if (soundEnabled) {                        
             soundMgr.turnSoundOn();
         }
         else {

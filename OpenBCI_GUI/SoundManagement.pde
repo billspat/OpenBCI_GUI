@@ -10,7 +10,8 @@ class SoundManager {
 
     AudioContext ac;
     int numChannels;
-    boolean soundOn = false;
+    boolean soundEnabled = false; // changed by sonifier widget
+    boolean soundOn = false; // changed by several things
     float baseFreq;  
     Sonifier[] channelSounds;
 
@@ -39,7 +40,7 @@ class SoundManager {
 
         for(int i = 0; i < numChannels; i++){
             // temporary way to make
-            channelSounds[i] = new Sonifier(ac, baseFreq * i);
+            channelSounds[i] = new Sonifier(ac, baseFreq * (i+1));
         } 
         
     }
@@ -117,10 +118,20 @@ class SoundManager {
         // sonifyDelta = savedValue - sonifyData;
         // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);
         // frequencyGlide.setValue(newfreq);  
-    }
+        if (soundEnabled) {
+            if (! soundOn )  { turnSoundOn(); } 
+        }
+
+        if ( ! soundEnabled  ) {
+            if ( soundOn ) { turnSoundOff(); }
+        } 
+    }  
 
     void draw(){
         // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);        
+
+        // if updating and soundEnabled and 
+        
         if (soundOn) {
             for(int i = 0; i < numChannels; i++){
                 channelSounds[i].draw();  
