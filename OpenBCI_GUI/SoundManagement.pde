@@ -42,14 +42,14 @@ class SoundManager {
        //create our channel bars and populate our channelBars array!
 
         // this should be in data processing but it's here for now
-        channelThresholds = new float[] { 68.0f, 12.0f, 36.0f, 6.75f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f};
+        channelThresholds = new float[] { 68.0f, 12.0f, 36.0f, 6.75f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f};
         channelFilters = new ThresholdFilter[16];
 
         for(int i = 0; i < numChannels; i++){
             // temporary way to make
-            println(" chan " + i + " baseFreq " + baseFreq * (i+1) + " theshold " + channelThresholds[i]);
             channelSounds[i] = new Sonifier(ac, baseFreq * (i+1));
             channelFilters[i] = new ThresholdFilter(channelThresholds[i]);
+            println(" instantiated chan ", i, " with threshold " + channelFilters[i].threshold);
         } 
         
     }
@@ -110,6 +110,17 @@ class SoundManager {
         }
     }
 
+    void printChannelStatus(int c){
+        // for debugging, printing state of channel
+
+        println("stat chan,data in, filtered data, gainsetting, actual gain", 
+        c, 
+        dataProcessing.data_std_uV[c], 
+        channelFilters[c].onoff(dataProcessing.data_std_uV[c]), 
+        channelSounds[c].gainSetting, 
+        channelSounds[c].gain.getValue()
+        ) ;
+    }
 
     void update(){
         // time series data, from global dataProcessing object
@@ -118,16 +129,10 @@ class SoundManager {
             // time series data, from global dataProcessing object            
             // filter using our stored files, returns 0 or 1
             channelSounds[i].update(channelFilters[i].onoff(dataProcessing.data_std_uV[i]));
+            
+
         } 
 
-        // set the new delta for each channel
-        // types of data that can be gotten        
-        // dataProcessing.headWidePower[ALPHA]
-        // Float savedValue = sonifyData;
-        // sonifyData = dataProcessing.headWidePower[sonifyWave];
-        // sonifyDelta = savedValue - sonifyData;
-        // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);
-        // frequencyGlide.setValue(newfreq);  
         if (soundEnabled && isRunning)  {
             if (! soundOn )  { turnSoundOn(); } 
         }
@@ -147,11 +152,17 @@ class SoundManager {
         if (soundOn) {
             for(int i = 0; i < numChannels; i++){
                 channelSounds[i].draw();  
+                printChannelStatus(i);
             } // and by 'draw', I mean make noise
         }
     }
 
 }
+
+
+
+///////////////////////////////// filter class
+// TODO move to new file, create real OO for filtering data to sound
 
 class ThresholdFilter{
     // simple class to detect when value is above/below a threshold
@@ -178,7 +189,8 @@ class ThresholdFilter{
     }
 
 }
-////////// sound class
+
+///////////////////////////////// sound class
 // TODO convert this to an abstract class
 
 class Sonifier {
@@ -190,23 +202,53 @@ class Sonifier {
     Glide gainGlide, frequencyGlide;
     Gain gain;
     WavePlayer wp;
+    ThresholdFilter filter;
+    float defaultThreshold = 6.0f;
+
+    Sonifier(AudioContext _ac){
+        init(_ac);
+    }
 
     Sonifier(AudioContext _ac, float _baseFreq){
-        // parent audio context, controlled by parent object (manager)
+        init(_ac);
+        setBaseFreq(_baseFreq);
+    // another construction but this one takes a filter setting
+    }
+
+    Sonifier(AudioContext _ac, float _baseFreq, float _filtersetting){    
+        init(_ac);
+        setBaseFreq(_baseFreq);
+        setFilterSetting(_filtersetting);
+    }
+
+    void setBaseFreq(float f){
+        baseFreq = f;
+        setFrequency(baseFreq);
+    }
+
+    void init(AudioContext _ac){
+                // parent audio context, controlled by parent object (manager)
         ac = _ac;
         // initial gain setting, could be a param
         gainSetting = 0.2f; 
         gainGlide = new Glide(ac, gainSetting, 10);
         gain = new Gain(ac, 1, gainGlide);
 
-        baseFreq = _baseFreq;
-        frequencyGlide = new Glide(ac, _baseFreq , 10);
+        baseFreq = 100;
+        frequencyGlide = new Glide(ac, baseFreq , 10);
         // sine wave, this could be a param
         
         wp = new WavePlayer(ac, frequencyGlide, Buffer.SINE);
         gain.addInput(wp);
         ac.out.addInput(gain);
+        filter = new ThresholdFilter(defaultThreshold);
 
+    }
+
+    void setFilterSetting(float v){
+        // abstract setter for future dev
+        // getter is currently self.filter.threshold
+        filter.threshold = v;
     }
 
     void setSoundOn(){
@@ -284,26 +326,3 @@ class Sonifier {
     }
 
 }
-
-
-
-// class TimeSeriesSoundManager extends SoundManager{
-    // a class of sound manager just for time series channels
-    // has an array of sound mangers for n channels?
-    // however we wan_t an api that can handle mutlp
-// }
-
-
-// two ways for channels
-// TimeSeriesSoundManager[] ts_sound_mgrs new TimeSeriesSoundManager[nchan];
-// thischan = 3;
-// ts_sound_mgrs[thischan].setGain(n);
-// 
-// or manager of managers
-// only valuable to do something will all channels at once
-// ts_manager.setGain(thischan, gain_n);
-// ts_manager.silence_all_channels();
-// save settings for all channels and apply them all at once
-//
-// ts_manager.setttings(ts_sound_settings); 
-// 
