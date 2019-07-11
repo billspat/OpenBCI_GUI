@@ -1,6 +1,11 @@
 # v4.1.3
 Use OpenBCIHub v2.0.9 please.
 
+## Beta 3
+
+###  Bug fixes
+* Fix app crash when streaming 16ch over LSL #557
+
 ## Beta 2
 
 ### Improvements
@@ -10,11 +15,13 @@ Use OpenBCIHub v2.0.9 please.
 * Add absolute timestamp to LSL stream for all data types #530
 * Update OpenBCI Data Format using Sessions #483
 * Add dropdown to limit recording duration for OpenBCI Data Format #461
+* Show intro animation on launch instead of grey screen
 
 ### Bug Fixes
 * Clear Playback History dropdown when settings are cleared #521
 * Accelerometer Widget values display correct data
 * Fix NullPointerExceptions caused by Data Log updates #548
+
 
 ## Beta 1
 
