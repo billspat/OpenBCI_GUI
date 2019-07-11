@@ -14,6 +14,9 @@ class SoundManager {
     boolean soundOn = false; // changed by several things
     float baseFreq;  
     Sonifier[] channelSounds;
+    ThresholdFilter[] channelFilters;
+    // this doesn't belong here but it's here for now
+    float[] channelThresholds;
 
     // this is the scaling of the delta to actually hear a sound
     // this should be based on the data we are listening to, and the brain wave (e.g. ALPHA > DELTA => alpha scale < delta scale ) 
@@ -38,9 +41,15 @@ class SoundManager {
         baseFreq = _baseFreq; // this will likely be removed
        //create our channel bars and populate our channelBars array!
 
+        // this should be in data processing but it's here for now
+        channelThresholds = new float[] { 68.0f, 12.0f, 36.0f, 6.75f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f, 5.0f};
+        channelFilters = new ThresholdFilter[16];
+
         for(int i = 0; i < numChannels; i++){
             // temporary way to make
+            println(" chan " + i + " baseFreq " + baseFreq * (i+1) + " theshold " + channelThresholds[i]);
             channelSounds[i] = new Sonifier(ac, baseFreq * (i+1));
+            channelFilters[i] = new ThresholdFilter(channelThresholds[i]);
         } 
         
     }
@@ -107,7 +116,8 @@ class SoundManager {
         // get new data from global data objects
         for(int i = 0; i < numChannels; i++){
             // time series data, from global dataProcessing object            
-            channelSounds[i].update(dataProcessing.data_std_uV[i]);
+            // filter using our stored files, returns 0 or 1
+            channelSounds[i].update(channelFilters[i].onoff(dataProcessing.data_std_uV[i]));
         } 
 
         // set the new delta for each channel
@@ -118,13 +128,15 @@ class SoundManager {
         // sonifyDelta = savedValue - sonifyData;
         // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);
         // frequencyGlide.setValue(newfreq);  
-        if (soundEnabled) {
+        if (soundEnabled && isRunning)  {
             if (! soundOn )  { turnSoundOn(); } 
         }
 
-        if ( ! soundEnabled  ) {
+        if ( (! soundEnabled) || (! isRunning ) ) {
             if ( soundOn ) { turnSoundOff(); }
         } 
+
+        
     }  
 
     void draw(){
@@ -141,6 +153,31 @@ class SoundManager {
 
 }
 
+class ThresholdFilter{
+    // simple class to detect when value is above/below a threshold
+    // experimenting with different methods
+    // TODO look into filters that come with this system
+    // or other filtering signal processing libaries
+
+    float threshold;
+
+    ThresholdFilter(float _threshold){
+        threshold = _threshold;
+    }
+
+    float filter(float x){
+        return( Math.abs(x) < threshold ? 0.0f : x);
+    }
+
+    float onoff(float x){
+        return( Math.abs(x) < threshold ? 0.0f : 1.0f);
+    }
+
+    boolean yesno(float x){
+        return( Math.abs(x) < threshold ? false : true);
+    }
+
+}
 ////////// sound class
 // TODO convert this to an abstract class
 
@@ -159,11 +196,11 @@ class Sonifier {
         ac = _ac;
         // initial gain setting, could be a param
         gainSetting = 0.2f; 
-        gainGlide = new Glide(ac, gainSetting, 50);
+        gainGlide = new Glide(ac, gainSetting, 10);
         gain = new Gain(ac, 1, gainGlide);
 
         baseFreq = _baseFreq;
-        frequencyGlide = new Glide(ac, _baseFreq , 50);
+        frequencyGlide = new Glide(ac, _baseFreq , 10);
         // sine wave, this could be a param
         
         wp = new WavePlayer(ac, frequencyGlide, Buffer.SINE);
@@ -173,18 +210,43 @@ class Sonifier {
     }
 
     void setSoundOn(){
-        // TODO: check if already started first
-        wp.pause(false);
+        if (wp.isPaused()){
+            wp.pause(false);
+            }
     }
 
     void setSoundOff(){
         // TODO: check if already stopped
-        wp.pause(true);
+        if (! wp.isPaused()){
+            wp.pause(true); 
+            }
     }
 
     void setGain(float gainVal){
         // process the value sent
-        gainGlide.setValue(gainVal);
+        if ( gainGlide.getValue() != gainVal){
+            gainSetting = gainVal;
+            gainGlide.setValue(gainVal);
+        }
+    }
+
+    void gainZero(){
+        // zero out gain does not pause the audo context
+        // but produces zero sound. 
+        // this is used in response to data inputs, not on/off switch
+        // first check if gain is already zero to avoid audio artifacts
+        if ( gainGlide.getValue() != 0.0f){
+            gainGlide.setValue(0.0f);}
+    }
+
+    void gainRestore(){
+        // restore the gain does not pause/unpaus audio 
+        // but produces zero sound. 
+        // this is used in response to data inputs, not on/off switch
+        // first check if gain is already at setting, to avoid audio artifacts
+        if ( gainGlide.getValue() != gainSetting){
+            gainGlide.setValue(gainSetting);
+        }
     }
 
     void setFrequency(float freqVal){        
@@ -211,11 +273,18 @@ class Sonifier {
         // called by parent sound manager draw method
         // Gain modulation by data
         // TODO process the data to make sense of the gain
-        // setGain(currentData);
+        // println("freq " + baseFreq + " data is " + currentData );
+        if (currentData > 0) {
+            // zero data, gain zero
+            gainZero();
+        } else {
+            gainRestore();
+        }
         
     }
 
 }
+
 
 
 // class TimeSeriesSoundManager extends SoundManager{
