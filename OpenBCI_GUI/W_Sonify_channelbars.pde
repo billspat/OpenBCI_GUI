@@ -75,7 +75,7 @@ class SoundChannelBar{
             .setLabel("gain")
             .setNumberOfTickMarks((int) gainMax + 1)
             .showTickMarks(true)
-            .setValue(5);
+            .setValue(2);   // TODO sync this starting value with sound manager channel start value
         
     }
 

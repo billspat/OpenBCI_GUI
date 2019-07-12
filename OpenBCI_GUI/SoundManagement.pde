@@ -42,14 +42,15 @@ class SoundManager {
        //create our channel bars and populate our channelBars array!
 
         // this should be in data processing but it's here for now
-        channelThresholds = new float[] { 68.0f, 12.0f, 36.0f, 6.75f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f};
+        channelThresholds = new float[] { 68.0f, 12.0f, 36.0f, 6.75f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f, 6.7f};
         channelFilters = new ThresholdFilter[16];
 
         for(int i = 0; i < numChannels; i++){
             // temporary way to make
             channelSounds[i] = new Sonifier(ac, baseFreq * (i+1));
+            channelSounds[i].setSoundOn();
+            channelSounds[i].setGain(0.2f);
             channelFilters[i] = new ThresholdFilter(channelThresholds[i]);
-            println(" instantiated chan ", i, " with threshold " + channelFilters[i].threshold);
         } 
         
     }
@@ -124,15 +125,15 @@ class SoundManager {
 
     void update(){
         // time series data, from global dataProcessing object
-        // get new data from global data objects
+
+        // send new data from global data objects
         for(int i = 0; i < numChannels; i++){
             // time series data, from global dataProcessing object            
             // filter using our stored files, returns 0 or 1
             channelSounds[i].update(channelFilters[i].onoff(dataProcessing.data_std_uV[i]));
-            
-
         } 
 
+        // sync sound processing state with state of widget and state of system
         if (soundEnabled && isRunning)  {
             if (! soundOn )  { turnSoundOn(); } 
         }
@@ -141,19 +142,16 @@ class SoundManager {
             if ( soundOn ) { turnSoundOff(); }
         } 
 
-        
     }  
 
-    void draw(){
+    void draw(){ // and by 'draw', I mean make noise
+        // saved code, this used to adjust the tone frequency with the data
         // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);        
-
-        // if updating and soundEnabled and 
-        
         if (soundOn) {
             for(int i = 0; i < numChannels; i++){
                 channelSounds[i].draw();  
-                printChannelStatus(i);
-            } // and by 'draw', I mean make noise
+                // printChannelStatus(i);  // to debug, uncomment this print statment
+            } 
         }
     }
 
@@ -310,19 +308,18 @@ class Sonifier {
         minData = ( minData <=currentData) ? minData : currentData;
     }
 
-
-    void draw(){
+    void draw(){ 
         // called by parent sound manager draw method
-        // Gain modulation by data
-        // TODO process the data to make sense of the gain
-        // println("freq " + baseFreq + " data is " + currentData );
-        if (currentData > 0) {
-            // zero data, gain zero
-            gainZero();
+        // this current basic method turns this sonifier on/off based on 1/0 filter
+        // it changes the gain instead of turning the whole channel on/off
+        // the UI has a button for turning it on/off
+        if (currentData > 0) {            
+           gainRestore();
         } else {
-            gainRestore();
+            // zero data, zero gain
+            // use method to set gain to zero, to preserve gain setting
+            gainZero();
         }
-        
     }
 
-}
+}  // end sonifier class
