@@ -236,7 +236,7 @@ class Sonifier {
         ac = _ac;
         // initial gain setting, could be a param
         gainSetting = 0.2f; 
-        gainGlide = new Glide(ac, gainSetting, 10);
+        gainGlide = new Glide(ac, gainSetting, 1);
         gain = new Gain(ac, 1, gainGlide);
 
         baseFreq = 100;
@@ -254,6 +254,12 @@ class Sonifier {
         // abstract setter for future dev
         // getter is currently self.filter.threshold
         filter.threshold = v;
+    }
+
+    float getFilterSetting(){
+        // stub function designed to be more generalized
+        // currently returns the only setting for the only filter
+        return(filter.threshold);
     }
 
     void setSoundOn(){

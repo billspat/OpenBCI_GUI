@@ -29,4 +29,26 @@ void thresholdChangeControl{{c}}(int n) {
   w_sonify.soundSetting("threshold", {{c}}, (float) n);
 }
 
+void thresholdTextControl{{c}}(String s){
+  println("threshold input {{c}} returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("threshold", {{c}}, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+  // previous version of this code which uses Float.parse(String) which processing doesm't have
+  // float floatValue = Float.parse(t);  // convert String to float
+                                      //  returns NaN is not a number
+  // if (floatValue == floatValue){       // this tests for NaN in Java
+    // only invoke callback if the text field is a number
+    //w_sonify.soundSetting("threshold", {{c}}, floatValue );
+ // }
+}
+
 {% endfor %}

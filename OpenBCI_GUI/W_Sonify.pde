@@ -94,13 +94,18 @@ class W_Sonify extends Widget {
         channelBarHeight = int(ts_h/numChannelBars);
        //create our channel bars and populate our channelBars array!
        // channelBar indexing is 0-based, unlike the OpenBCI time series bars
-       
+
+        soundMgr = new SoundManager(100.0f, nchan);
+
         for(int i = 0; i < numChannelBars; i++){
             int channelBarY = int(ts_y) + i*(channelBarHeight); //iterate through bar locations
             channelBars[i] = new SoundChannelBar(_parent, i, int(ts_x), channelBarY, int(ts_w), channelBarHeight, cp5_widget); //int _channelNumber, int _x, int _y, int _w, int _h            
+            // set data values for UI based on soundMgr settings.  Not sure this goes here or elsewhere
+            channelBars[i].setThresholdTextValue(soundMgr.channelFilters[i].threshold);
+            // alternative and maybe the new way to get this setting is from the sonifiers (untested)
+            // channelsBars[i].setThresholdTextValue(soundMgr.channelSounds[i].getFilterSetting()) 
         }
 
-        soundMgr = new SoundManager(100.0f, nchan);
 
          // baseFrequency is 100, need to change that basedd on drop down
         
