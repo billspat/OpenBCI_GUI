@@ -24,4 +24,9 @@ void freqChangeControl{{c}}(int n) {
   w_sonify.soundSetting("frequency", {{c}}, (float) n);
 }
 
+void thresholdChangeControl{{c}}(int n) {
+  println("threshold change {{c}} returned " + n);
+  w_sonify.soundSetting("threshold", {{c}}, (float) n);
+}
+
 {% endfor %}

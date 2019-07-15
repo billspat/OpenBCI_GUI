@@ -31,14 +31,7 @@ class W_Sonify extends Widget {
     
     float[] waveScales;
     private boolean soundEnabled;    
-    // private AudioContext sonifyAC;
-    // private WavePlayer sonifyWP;
-    // private int waveFreq;
-    // private Buffer sinetone;
-    // private Buffer squaretone;
-    // private Glide frequencyGlide;
-        
-    // Slider gainSlider;
+
     float sonifyData, sonifyDelta;
     int sonifyDeltaScale, scaleGain;
     int sonifyWave = ALPHA;

@@ -103,11 +103,16 @@ class SoundManager {
                 // possibly process the gain value here
                 channelSounds[channelNum].setGain( settingValue);
                 break;	
-            case "frequency":
-                // process value here
-                
+            case "threshold":
+                // redundant setting for now until I determine the best scheme
+                // 1. set using soundManager's member filter array
+                channelFilters[channelNum].threshold = settingValue;
+                // 2 set using the sonifier's own member filter
+                channelSounds[channelNum].setFilterSetting(settingValue);
+                break;
+            case "frequency":                
                 channelSounds[channelNum].setFrequency( settingValue);
-                break;            
+                break;
         }
     }
 
@@ -130,7 +135,9 @@ class SoundManager {
         for(int i = 0; i < numChannels; i++){
             // time series data, from global dataProcessing object            
             // filter using our stored files, returns 0 or 1
-            channelSounds[i].update(channelFilters[i].onoff(dataProcessing.data_std_uV[i]));
+            float channelData = dataProcessing.data_std_uV[i];
+            float filteredData = channelFilters[i].onoff(channelData);
+            channelSounds[i].update(filteredData);
         } 
 
         // sync sound processing state with state of widget and state of system
@@ -306,6 +313,8 @@ class Sonifier {
         // track the extremes.... for adjusting the scale dynamically
         maxData = ( maxData >=currentData) ? maxData : currentData;
         minData = ( minData <=currentData) ? minData : currentData;
+        // TODO use local filter on raw data sent here by soundManager
+        // 
     }
 
     void draw(){ 

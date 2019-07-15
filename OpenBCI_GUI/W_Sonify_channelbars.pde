@@ -21,7 +21,7 @@ class SoundChannelBar{
     TextBox voltageValue;
     boolean drawVoltageValue = true;
     ControlP5 parentCP5;
-    Slider gainSlider;
+    Slider gainSlider, thresholdSlider;
 
     SoundChannelBar(PApplet _parent, int _channelNumber, int _x, int _y, int _w, int _h, ControlP5 _cp5){ // channel number, x/y location, height, width
 
@@ -77,6 +77,17 @@ class SoundChannelBar{
             .showTickMarks(true)
             .setValue(2);   // TODO sync this starting value with sound manager channel start value
         
+        // cutoff "thresholdChangeControl" + channelNumber
+        thresholdSlider = parentCP5.addSlider("thresholdChangeControl" + channelNumber) 
+            .setPosition(x + 200,  y + int(h/2) - int(onOff_diameter/2))
+            .setRange(0,50)
+            .setWidth(110)
+            .setHeight(onOff_diameter-1)
+            .setLabel("µV threshold")
+            .setNumberOfTickMarks((int) 50 + 1)
+            .showTickMarks(true)
+            .setValue(6);   
+
     }
 
 
@@ -166,6 +177,8 @@ class SoundChannelBar{
         voltageValue.y = y + h;
     
         gainSlider.setPosition(x + 50,  y + int(h/2) - int(onOff_diameter/2));
+        thresholdSlider.setPosition(x + 200,  y + int(h/2) - int(onOff_diameter/2));
+
     }
 
     void mousePressed(){
