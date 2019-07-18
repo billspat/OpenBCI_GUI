@@ -583,9 +583,9 @@ void hubStart() {
   */
 boolean hubStop() {
     if (isWindows()) {
-        return killRunningprocessWin();
+        // return killRunningprocessWin();
     } else {
-        killRunningProcessMac();
+        // killRunningProcessMac();
         return true;
     }
 }
