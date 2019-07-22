@@ -22,7 +22,7 @@ class SoundChannelBar{
     boolean drawVoltageValue = true;
     ControlP5 parentCP5;
     Slider gainSlider, thresholdSlider;
-    Textfield thresholdText;
+    Textfield thresholdText,freqText;
 
     SoundChannelBar(PApplet _parent, int _channelNumber, int _x, int _y, int _w, int _h, ControlP5 _cp5){ // channel number, x/y location, height, width
 
@@ -116,6 +116,10 @@ class SoundChannelBar{
 
     void setThresholdTextValue(float value){
         thresholdText.setValue(Float.toString(value));
+    }
+
+    void setFreqValue(float value){
+        freqText.setValue(Float.toString(value));
     }
 
 

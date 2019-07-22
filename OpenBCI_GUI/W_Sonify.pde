@@ -102,6 +102,7 @@ class W_Sonify extends Widget {
             channelBars[i] = new SoundChannelBar(_parent, i, int(ts_x), channelBarY, int(ts_w), channelBarHeight, cp5_widget); //int _channelNumber, int _x, int _y, int _w, int _h            
             // set data values for UI based on soundMgr settings.  Not sure this goes here or elsewhere
             channelBars[i].setThresholdTextValue(soundMgr.channelFilters[i].threshold);
+            channelBars[i].setFreqValue( soundMgr.channelSounds[i].baseFreq);
             // alternative and maybe the new way to get this setting is from the sonifiers (untested)
             // channelsBars[i].setThresholdTextValue(soundMgr.channelSounds[i].getFilterSetting()) 
         }

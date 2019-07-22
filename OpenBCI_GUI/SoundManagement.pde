@@ -302,7 +302,8 @@ class Sonifier {
         }
     }
 
-    void setFrequency(float freqVal){        
+    void setFrequency(float freqVal){
+        baseFreq = freqVal;        
         frequencyGlide.setValue(freqVal);         
     }
     

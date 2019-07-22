@@ -42,14 +42,24 @@ void thresholdTextControl0(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 0, floatValue );
- // }
 }
+
+void freqTextControl0(String s){
+  println("freqinput 0 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 0, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 1
@@ -81,14 +91,24 @@ void thresholdTextControl1(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 1, floatValue );
- // }
 }
+
+void freqTextControl1(String s){
+  println("freqinput 1 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 1, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 2
@@ -120,14 +140,24 @@ void thresholdTextControl2(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 2, floatValue );
- // }
 }
+
+void freqTextControl2(String s){
+  println("freqinput 2 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 2, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 3
@@ -159,14 +189,24 @@ void thresholdTextControl3(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 3, floatValue );
- // }
 }
+
+void freqTextControl3(String s){
+  println("freqinput 3 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 3, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 4
@@ -198,14 +238,24 @@ void thresholdTextControl4(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 4, floatValue );
- // }
 }
+
+void freqTextControl4(String s){
+  println("freqinput 4 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 4, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 5
@@ -237,14 +287,24 @@ void thresholdTextControl5(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 5, floatValue );
- // }
 }
+
+void freqTextControl5(String s){
+  println("freqinput 5 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 5, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 6
@@ -276,14 +336,24 @@ void thresholdTextControl6(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 6, floatValue );
- // }
 }
+
+void freqTextControl6(String s){
+  println("freqinput 6 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 6, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 7
@@ -315,14 +385,24 @@ void thresholdTextControl7(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 7, floatValue );
- // }
 }
+
+void freqTextControl7(String s){
+  println("freqinput 7 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 7, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 8
@@ -354,14 +434,24 @@ void thresholdTextControl8(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 8, floatValue );
- // }
 }
+
+void freqTextControl8(String s){
+  println("freqinput 8 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 8, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 9
@@ -393,14 +483,24 @@ void thresholdTextControl9(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 9, floatValue );
- // }
 }
+
+void freqTextControl9(String s){
+  println("freqinput 9 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 9, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 10
@@ -432,14 +532,24 @@ void thresholdTextControl10(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 10, floatValue );
- // }
 }
+
+void freqTextControl10(String s){
+  println("freqinput 10 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 10, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 11
@@ -471,14 +581,24 @@ void thresholdTextControl11(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 11, floatValue );
- // }
 }
+
+void freqTextControl11(String s){
+  println("freqinput 11 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 11, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 12
@@ -510,14 +630,24 @@ void thresholdTextControl12(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 12, floatValue );
- // }
 }
+
+void freqTextControl12(String s){
+  println("freqinput 12 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 12, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 13
@@ -549,14 +679,24 @@ void thresholdTextControl13(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 13, floatValue );
- // }
 }
+
+void freqTextControl13(String s){
+  println("freqinput 13 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 13, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 14
@@ -588,14 +728,24 @@ void thresholdTextControl14(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 14, floatValue );
- // }
 }
+
+void freqTextControl14(String s){
+  println("freqinput 14 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 14, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
 /////  CHANNEL 15
@@ -627,13 +777,23 @@ void thresholdTextControl15(String s){
       System.out.println("NumberFormatException: " + nfe.getMessage());
     }
 
-  // previous version of this code which uses Float.parse(String) which processing doesm't have
-  // float floatValue = Float.parse(t);  // convert String to float
-                                      //  returns NaN is not a number
-  // if (floatValue == floatValue){       // this tests for NaN in Java
-    // only invoke callback if the text field is a number
-    //w_sonify.soundSetting("threshold", 15, floatValue );
- // }
 }
+
+void freqTextControl15(String s){
+  println("freqinput 15 returned " + s);
+
+    try
+    {
+      float f = Float.valueOf(s.trim()).floatValue();
+      w_sonify.soundSetting("frequency", 15, f );  
+    }
+    catch (NumberFormatException nfe)
+    {
+      System.out.println("NumberFormatException: " + nfe.getMessage());
+    }
+
+}
+
+
 
 
