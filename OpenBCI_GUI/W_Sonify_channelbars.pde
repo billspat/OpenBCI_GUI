@@ -95,10 +95,22 @@ class SoundChannelBar{
             .setHeight(onOff_diameter-1)
             .setFocus(true)
             .setColor(color(255,0,0))
-            .setLabel("Threshold")
+            .setLabel("Thresh")
             .setLabelVisible(false)
             .setAutoClear(false)
             ;
+
+        freqText = parentCP5.addTextfield("freqTextControl" + channelNumber)
+            .setPosition(x + 260,  y + int(h/2) - int(onOff_diameter/2))
+            .setWidth(40)
+            .setHeight(onOff_diameter-1)
+            .setFocus(true)
+            .setColor(color(255,0,0))
+            .setLabel("Freq")
+            .setLabelVisible(false)
+            .setAutoClear(false)
+            ;
+
     }
 
 
@@ -193,6 +205,7 @@ class SoundChannelBar{
         gainSlider.setPosition(x + 50,  y + int(h/2) - int(onOff_diameter/2));
         // thresholdSlider.setPosition(x + 200,  y + int(h/2) - int(onOff_diameter/2));
         thresholdText.setPosition(x + 200,  y + int(h/2) - int(onOff_diameter/2));
+        freqText.setPosition(     x + 260,  y + int(h/2) - int(onOff_diameter/2));
 
     }
 
