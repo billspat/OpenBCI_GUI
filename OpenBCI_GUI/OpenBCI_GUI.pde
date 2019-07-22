@@ -583,6 +583,7 @@ void hubStart() {
   */
 boolean hubStop() {
     if (isWindows()) {
+        return true;
         // return killRunningprocessWin();
     } else {
         // killRunningProcessMac();
