@@ -136,7 +136,17 @@ class SoundManager {
             // time series data, from global dataProcessing object            
             // filter using our stored files, returns 0 or 1
             float channelData = dataProcessing.data_std_uV[i];
-            float filteredData = channelFilters[i].onoff(channelData);
+            float filteredData = 0.0f;
+
+            // get data from global objects for this channel
+            //  
+            filteredData =  ( channelFilters[i].yesno(channelData) && dataProcessing_user.channelStats[i].peaked())  ?  1.0f : 0.0f;
+
+            // previous simple threshold filter use... can delete
+            // float filteredData = channelFilters[i].onoff(channelData); 
+
+            // send the data to the channel sonifier to decide what to do with it
+            // note that most of the update() functions in this system don't send data
             channelSounds[i].update(filteredData);
         } 
 
@@ -151,9 +161,7 @@ class SoundManager {
 
     }  
 
-    void draw(){ // and by 'draw', I mean make noise
-        // saved code, this used to adjust the tone frequency with the data
-        // float newfreq = waveFreq + (sonifyDelta * sonifyDeltaScale * scaleGain);        
+    void draw(){ // and by 'draw', I mean make noise       
         if (soundOn) {
             for(int i = 0; i < numChannels; i++){
                 channelSounds[i].draw();  

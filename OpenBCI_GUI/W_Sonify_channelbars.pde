@@ -127,15 +127,20 @@ class SoundChannelBar{
     void update(){
 
         //update the voltage value text string
-        String fmt; float val;
+        String fmt;
 
         //update the voltage values
-        val = dataProcessing.data_std_uV[channelNumber];
-        voltageValue.string = String.format(getFmt(val),val) + " uVrms";
+        // WARNING - PULLING DATA FROM GLOBAL VARS
+        // THIS SHOULD BE SENT TO THIS BAR VIA W_SONIFY
+        float cVal = dataProcessing.data_std_uV[channelNumber];
+        float cMax = dataProcessing_user.channelStats[channelNumber].max();
+        String peak = dataProcessing_user.channelStats[channelNumber].peaked() ? " ^ " : " ";
+        voltageValue.string = peak + String.format(getFmt(cVal),cVal) + "/" + String.format(getFmt(cMax),cMax) + " uVrms";        
+        // voltageValue.string = String.format(getFmt(val),val) + " uVrms";
 
-        // get data for audio for this channel!
-        // process audio for this channel
-        // note  - this is from the TimeSeries plots.  For now not looking to see 'is_railed"
+ 
+        // note  - this is from the TimeSeries plots.  don't defined railed here so 
+        // have to ignore
         // if (is_railed != null) {
         //     if (is_railed[channelNumber-1].is_railed == true) {
         //         voltageValue.string = "RAILED";
