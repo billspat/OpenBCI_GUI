@@ -62,19 +62,18 @@ class SoundChannelBar{
         voltageValue.backgroundColor = color(255,255,255,125);
 
 
-        // new var slider hieight or control heigh
-        // functions are  gainChangeControl01,  gainChangeControl02, etc
+        // functions these GUI components call are in W_Sonify_channelbar_callbacks.pde 
+        // for example gainChangeControl0,  gainChangeControl1, etc.   
 
-        // yuck setting this value by hand
         gainMax = 10.0f;  //TODO put this in the constructor, or determine from parent 
         // need to sync this value between the slider creation and value return
         gainSlider = parentCP5.addSlider("gainChangeControl" + channelNumber) 
             .setPosition(x + 50,  y + int(h/2) - int(onOff_diameter/2))
             .setRange(0,gainMax)
             .setWidth(110)
-            .setHeight(onOff_diameter-1)
+            .setHeight(onOff_diameter-1) // use same height as neighboring button
             .setLabel("gain")
-            .setNumberOfTickMarks((int) gainMax + 1)
+            .setNumberOfTickMarks((int) gainMax + 1)  // +1 since it starts from zero
             .showTickMarks(true)
             .setValue(2);   // TODO sync this starting value with sound manager channel start value
         

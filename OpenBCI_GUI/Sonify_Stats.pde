@@ -5,7 +5,7 @@
 class RunningStats{
     // this is to help calculate running stats on the float arrays used in this program
     // example
-    // RunningStats[] channelStats = new RunningStats()[n_chan];  
+    // RunningStats[] rs = new RunningStats()[n_chan];  
     // new data ==> data_newest_uV[][]
     // for (int i = 0; i < n_chan; i++;){
     //      rs[i].push(data_newest_uV[i][data_newest_uV.length -1]);
